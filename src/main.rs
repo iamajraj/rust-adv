@@ -1,4 +1,5 @@
 use std::{
+    collections::HashMap,
     env::*,
     fs::{self, File},
     io::ErrorKind,
@@ -6,9 +7,24 @@ use std::{
     vec,
 };
 
+macro_rules! my_mac {
+    ( $( $x:expr => $s:expr ),* ) => {
+        {
+            let mut m_hash = HashMap::new();
+            $(
+                m_hash.insert($x, $s);
+            )*
+            m_hash
+        }
+    }
+}
+
 // tasklist /fi "pid eq 6480" /nh /fo:csv
 
 fn main() {
+    let my_mac_init = my_mac![0 => "Raj"];
+
+    println!("{:?}", my_mac_init);
     println!("My Pid {:}", process::id());
     let search_filter = format!("pid eq {:}", process::id());
     let command = Command::new("tasklist")
