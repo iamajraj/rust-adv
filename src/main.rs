@@ -21,9 +21,16 @@ macro_rules! my_mac {
 
 use rust_expl::{html, main};
 
+fn take_ref(r: &mut String) {
+    r.push_str("Hello World");
+}
+
 // tasklist /fi "pid eq 6480" /nh /fo:csv
 #[main]
 fn main() {
+    let mut mystr = String::new();
+    take_ref(&mut mystr);
+    println!("{:}", mystr);
     let my_mac_init = my_mac![0 => "Raj"];
 
     html!(

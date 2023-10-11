@@ -12,20 +12,28 @@ pub fn html(_item: TokenStream) -> TokenStream {
 #[proc_macro_attribute]
 pub fn main(_: TokenStream, input: TokenStream) -> TokenStream {
     let input_str = input.clone().to_string();
-    let fn_to_call = input_str.split(" ").nth(1).unwrap_or_else(|| "");
-    println!("{:}", fn_to_call);
-    // let x = format!(
-    //     r#"
-    //     fn main(){{
-    //             {input}
-
-    //             {fn_to_call};
-    //     }}
-    // "#,
-    //     input = input,
-    //     fn_to_call = fn_to_call
-    // );
 
     // x.parse().unwrap()
-    input
+    let fn_name = input_str.split(" ").nth(1).unwrap();
+
+    let l_code = &input_str[11..input_str.len() - 1];
+    let mut code = String::new();
+    code.push_str(format!("fn {:}", fn_name).as_str());
+
+    code.push_str(
+        "let m_thread = std::thread::spawn(|| {
+        for i in 1..10 {
+            std::thread::sleep(std::time::Duration::from_millis(400));
+            println!(\"{:}\", i);
+        }
+    });",
+    );
+    code.push_str("println!(\"Customized\");");
+
+    code.push_str(l_code);
+    code.push_str(";m_thread.join().unwrap();");
+    code.push_str("}");
+
+    code.parse().unwrap()
+    // input
 }
