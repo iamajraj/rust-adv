@@ -19,10 +19,18 @@ macro_rules! my_mac {
     }
 }
 
-// tasklist /fi "pid eq 6480" /nh /fo:csv
+use rust_expl::{html, main};
 
+// tasklist /fi "pid eq 6480" /nh /fo:csv
+#[main]
 fn main() {
     let my_mac_init = my_mac![0 => "Raj"];
+
+    html!(
+        <div>
+            <p>Hello World </p>
+        </div>
+    );
 
     println!("{:?}", my_mac_init);
     println!("My Pid {:}", process::id());
