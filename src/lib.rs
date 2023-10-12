@@ -6,7 +6,9 @@ pub fn html(_item: TokenStream) -> TokenStream {
         "{:?}",
         _item.clone().to_string().replace(" ", "").replace("\"", "")
     );
-    "()".parse().unwrap()
+    // "()".parse().unwrap()
+    let str = format!("{:?}", _item.clone().to_string());
+    str.parse().unwrap()
 }
 
 #[proc_macro_attribute]

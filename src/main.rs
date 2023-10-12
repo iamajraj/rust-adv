@@ -33,10 +33,13 @@ fn main() {
     println!("{:}", mystr);
     let my_mac_init = my_mac![0 => "Raj"];
 
-    html!(
-        <div>
-            <p>Hello World </p>
-        </div>
+    println!(
+        "{:}",
+        html!(
+            <div>
+                <p>Hello World </p>
+            </div>
+        )
     );
 
     println!("{:?}", my_mac_init);
